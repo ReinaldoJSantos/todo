@@ -5,12 +5,17 @@ from app.database.deps import get_db
 from app.schemas.task import TaskCreate, TasksUpdate, TaskResponse
 from app.models.task import Task
 
+from app.core.dependecies import get_current_user
+
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
 
 @router.get("/", response_model=List[TaskResponse])
-def get_task(db: Session = Depends(get_db)):
+def list_task(
+    db: Session = Depends(get_db),
+    user_id: int = Depends(get_current_user)
+              ):
     return db.query(Task).all()
 
 
