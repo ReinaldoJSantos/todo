@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from app.database.session import Base, engine
+from app.models import task
 from app.routes import tasks
 
 
@@ -10,7 +12,4 @@ app = FastAPI(
 
 app.include_router(tasks.router)
 
-
-@app.get("/healt")
-def get_healt():
-    return {"message": "Ok"}
+Base.metadata.create_all(bind=engine)
