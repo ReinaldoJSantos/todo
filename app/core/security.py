@@ -1,11 +1,9 @@
 import hashlib
 from datetime import datetime, timedelta
 from jose import jwt
-# from passlib.context import CryptContext
+from app.core.config import settings
 
-SECRET_KEY = "super-secret-key"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 # -------------------------
 # Password helpers (SIMPLES)
@@ -22,7 +20,6 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(data: dict):
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + timedelta(minutes=settings.access_token_expire_minutes)
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
+    return jwt.encode(to_encode, settings.secret_key, algorithm=ALGORITHM)
