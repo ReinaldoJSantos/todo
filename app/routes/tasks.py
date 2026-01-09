@@ -5,7 +5,7 @@ from app.database.deps import get_db
 from app.schemas.task import TaskCreate, TasksUpdate, TaskResponse
 from app.models.task import Task
 
-from app.core.dependecies import get_current_user
+from app.core.dependencies import get_current_user
 
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
@@ -45,7 +45,7 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     return db_task
 
 
-@router.put("/task_id", response_model=TaskResponse)
+@router.put("/{task_id}", response_model=TaskResponse)
 def update_task(
     task_id: int,
     task_update: TasksUpdate,
