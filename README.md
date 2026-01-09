@@ -27,7 +27,6 @@ app/
 └── main.py
 
 
-
 ## ⚙️ Configuração
 
 Crie um arquivo `.env` na raiz:
